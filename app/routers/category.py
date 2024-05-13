@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 from config.database import get_db
 
-from stock.schemas import CategoryCreate, CategoryUpdate, Category
+from schemas.category import CategoryCreate, CategoryUpdate, Category
 from config.database import Base, engine
-from stock.controllers.category import CategoryController
+from controllers.category import CategoryController
 
-from stock.crud import crud_factory
+
 
 router = APIRouter()
 

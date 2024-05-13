@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
-from stock.crud import crud_factory
-from stock.models import Category as CategoryModel
+from service.crud import crud_factory
+from models import Category as CategoryModel
 
 DETAIL_NOT_FOUND = "Category not found"
 
