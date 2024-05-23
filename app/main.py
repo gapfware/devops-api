@@ -4,7 +4,7 @@ from app.routers.category import router as category_router
 from app.middleware.error_handler import ErrorHandler
 from app.config.database import engine, Base
 from fastapi.responses import RedirectResponse
-
+from app.routers.product import router as product_router
 
 
 app = FastAPI(
@@ -23,8 +23,8 @@ app.add_middleware(
 )
 
 
-
 app.include_router(category_router, prefix='/categories', tags=['categories'])
+app.include_router(product_router, prefix='/products', tags=['products'])
 
 
 @app.get("/")

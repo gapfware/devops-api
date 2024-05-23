@@ -14,6 +14,10 @@ def crud_factory(model):
             return jsonable_encoder(db.query(model).filter_by(name=name).first())
 
         @classmethod
+        def get_by_unique_name(cls, db, unique_name):
+            return jsonable_encoder(db.query(model).filter_by(unique_name=unique_name).first())
+
+        @classmethod
         def get_by_id(cls, db, id):
             return jsonable_encoder(db.get(model, id))
 

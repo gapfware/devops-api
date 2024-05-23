@@ -41,7 +41,7 @@ class CategoryController:
         try:
             updated_category = self.crud.update(
                 db=self.db, id=id, data=category)
-        except errors.lookup(UNIQUE_VIOLATION):
+        except Exception as e:
             raise HTTPException(
                 status_code=400, detail="Category name already exists")
 
