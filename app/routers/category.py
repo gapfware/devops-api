@@ -1,15 +1,10 @@
 from fastapi import APIRouter, Depends
-from config.database import get_db
-
-from schemas.category import CategoryCreate, CategoryUpdate, Category
-from config.database import Base, engine
-from controllers.category import CategoryController
-
+from app.config.database import get_db
+from app.schemas.category import CategoryCreate, CategoryUpdate, Category
+from app.controllers.category import CategoryController
 
 
 router = APIRouter()
-
-Base.metadata.create_all(bind=engine)
 
 
 @router.get('/', response_model=list[Category])

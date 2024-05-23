@@ -1,7 +1,9 @@
 from fastapi import HTTPException, status
 from fastapi.responses import JSONResponse
-from service.crud import crud_factory
-from models import Category as CategoryModel
+from app.service.crud import crud_factory
+from app.models import Category as CategoryModel
+from psycopg2.errorcodes import UNIQUE_VIOLATION
+from psycopg2 import errors
 
 DETAIL_NOT_FOUND = "Category not found"
 
@@ -35,12 +37,14 @@ class CategoryController:
         if not category_exists:
             raise HTTPException(
                 status_code=404, detail=DETAIL_NOT_FOUND)
-        category_exists = self.crud.get_by_name(
-            db=self.db, name=category.name)
-        if category_exists:
+
+        try:
+            updated_category = self.crud.update(
+                db=self.db, id=id, data=category)
+        except errors.lookup(UNIQUE_VIOLATION):
             raise HTTPException(
-                status_code=400, detail="Category already exists")
-        updated_category = self.crud.update(db=self.db, id=id, data=category)
+                status_code=400, detail="Category name already exists")
+
         return JSONResponse(content=updated_category, status_code=status.HTTP_200_OK)
 
     def delete(self, id) -> JSONResponse:

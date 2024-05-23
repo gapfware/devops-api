@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 
 
@@ -19,6 +19,3 @@ class CategoryUpdate(CategoryBase):
 
 class Category(CategoryBase):
     id: int
-
-    class Config:
-        from_attributes = True

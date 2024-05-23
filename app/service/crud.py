@@ -1,4 +1,6 @@
 from fastapi.encoders import jsonable_encoder
+from psycopg2.errorcodes import UNIQUE_VIOLATION
+from psycopg2 import errors
 
 
 def crud_factory(model):
@@ -13,7 +15,7 @@ def crud_factory(model):
 
         @classmethod
         def get_by_id(cls, db, id):
-            return jsonable_encoder(db.query(model).get(id))
+            return jsonable_encoder(db.get(model, id))
 
         @classmethod
         def create(cls, db, data):
@@ -25,16 +27,20 @@ def crud_factory(model):
 
         @classmethod
         def update(cls, db, id, data):
-            instance = db.query(model).get(id)
-            for key, value in data.dict().items():
+            instance = db.get(model, id)
+            for key, value in data.model_dump().items():
                 setattr(instance, key, value)
-            db.commit()
-            db.refresh(instance)
-            return jsonable_encoder(instance)
+            try:
+                db.commit()
+                db.refresh(instance)
+                return jsonable_encoder(instance)
+            except errors.lookup(UNIQUE_VIOLATION):
+                db.rollback()
+                raise Exception("Category name already exists")
 
         @classmethod
         def delete(cls, db, id):
-            instance = db.query(model).get(id)
+            instance = db.get(model, id)
             db.delete(instance)
             db.commit()
             return jsonable_encoder(instance)
