@@ -14,7 +14,7 @@ port = getenv("POSTGRES_PORT")
 database = getenv("POSTGRES_DB")
 environment = getenv("ENV")
 
-if environment == "development":
+if environment == "build":
     SQLALCHEMY_DATABASE_URL = 'sqlite:///./test.db'
 else:
     SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}:{port}/{database}"

@@ -26,17 +26,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Start Docker Compose
-        run: |
-          export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-          export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-          export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-          export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-          docker-compose up -d
+      - name: Start Fast API
+        run: fastapi run --host 0.0.0.0
 
       - name: Run unit tests
         run: pytest
 
-      - name: Stop Docker Compose
-        run: docker-compose down
+
