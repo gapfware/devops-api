@@ -45,10 +45,10 @@ jobs:
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
-        run: echo ${{ secrets.USERNAME }}
         with:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+        
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
