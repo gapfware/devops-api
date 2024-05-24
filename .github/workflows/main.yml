@@ -27,8 +27,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Start Fast API
-        env: ${{ variables.ENV }}
-
         run: fastapi run --host 0.0.0.0
 
       - name: Run unit tests
