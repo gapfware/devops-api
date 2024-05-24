@@ -28,9 +28,8 @@ jobs:
 
       - name: Start Fast API
         run: |
-          export ENV="build"
           docker build --target production -t prod-fastapi . 
-          docker run -p 8000:8000 prod-fastapi
+          docker run -e ENV=build -p 8000:8000 prod-fastapi
 
       - name: Run unit tests
         run: pytest
