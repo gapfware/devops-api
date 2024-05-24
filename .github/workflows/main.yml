@@ -27,7 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Start Fast API
-        ENV: build
+        env: ${{ variables.ENV }}
 
         run: fastapi run --host 0.0.0.0
 
