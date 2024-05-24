@@ -3,7 +3,6 @@ from app.test.conftest import client
 
 endpoint = "/api/v1/categories"
 
-
 def test_read_categories():
 
     response = client.get(endpoint)
@@ -82,7 +81,7 @@ def test_create_category_repeated_name():
 def test_update_category():
     name = f"Test Category update {uuid.uuid4()}"
     response = client.post(
-        f"endpoint",
+        endpoint,
         json={
             "name": name,
             "measures": "Test Measures",
