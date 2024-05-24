@@ -28,11 +28,9 @@ jobs:
 
       - name: Start Fast API
         run: |
-          docker build --target production -t prod-fastapi . 
-          docker run -e ENV=build -p 8000:8000 prod-fastapi
+          export ENV=build
+          fastapi run --host 0.0.0.0 &
+          sleep 5 # Wait for Fast API to start
+          pytest
 
-      - name: Run unit tests
-        run: pytest
 
-      - name: Docker Container Stop
-        run: docker stop prod-fastapi
