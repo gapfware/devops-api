@@ -30,7 +30,7 @@ jobs:
         run: |
           export ENV=build
           fastapi run --host 0.0.0.0 &
-          sleep 5 # Wait for Fast API to start
+          sleep 5
           pytest
 
 
