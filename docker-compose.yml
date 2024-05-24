@@ -2,6 +2,7 @@ services:
   db:
     image: postgres:16.3
     environment:
+      ENV: ${ENV}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /data/postgres
