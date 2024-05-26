@@ -42,7 +42,7 @@ jobs:
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo ${#DOCKER_PASSWORD}
+          echo ${DOCKER_PASSWORD}
 
   push_to_dockerhub:
     name: Push Docker image to DockerHub
