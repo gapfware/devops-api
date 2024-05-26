@@ -2,9 +2,10 @@ import uuid
 import math
 from app.test.conftest import client
 
+endpoint = "/api/v1/products"
 
 def test_read_products():
-    response = client.get("/products")
+    response = client.get(endpoint)
     assert response.status_code == 200
     if response.json() == []:
         assert response.json() == []
@@ -21,7 +22,7 @@ def test_read_products():
 
 
 def test_create_product():
-    response = client.post("/products", json={
+    response = client.post(endpoint, json={
         "name": "Test Product",
         "unique_name": f"Test Unique Name {uuid.uuid4()}",
         "category_id": 1,
@@ -46,7 +47,7 @@ def test_create_product():
 
 def test_create_product_repeated_unique_name():
     unique_name = f"Test Unique Name {uuid.uuid4()}"
-    response = client.post("/products", json={
+    response = client.post(endpoint, json={
         "name": "Test Product",
         "unique_name": unique_name,
         "category_id": 1,
@@ -57,7 +58,7 @@ def test_create_product_repeated_unique_name():
         "description": "Test Description"
     })
     assert response.status_code == 201
-    response = client.post("/products", json={
+    response = client.post(endpoint, json={
         "name": "Test Product",
         "unique_name": unique_name,
         "category_id": 1,
@@ -72,13 +73,13 @@ def test_create_product_repeated_unique_name():
 
 
 def test_read_product_by_id():
-    response = client.get("/products")
+    response = client.get(endpoint)
     assert response.status_code == 200
     if response.json() == []:
         assert response.json() == []
     else:
         product_id = response.json()[0]["id"]
-        response = client.get(f"/products/{product_id}")
+        response = client.get(f"{endpoint}/{product_id}")
         assert response.status_code == 200
         assert response.json()["id"] == product_id
         assert isinstance(response.json()["name"], str)
@@ -92,25 +93,25 @@ def test_read_product_by_id():
 
 
 def test_read_product_by_id_not_found():
-    response = client.get("/products")
+    response = client.get(endpoint)
     assert response.status_code == 200
     if response.json() == []:
         assert response.json() == []
     else:
         product_id = response.json()[-1]["id"]
-        response = client.get(f"/products/{product_id + 1}")
+        response = client.get(f"{endpoint}/{product_id + 1}")
         assert response.status_code == 404
         assert response.json() == {"detail": "Product not found"}
 
 
 def test_update_product():
-    response = client.get("/products")
+    response = client.get(endpoint)
     assert response.status_code == 200
     if response.json() == []:
         assert response.json() == []
     else:
         product_id = response.json()[0]["id"]
-        response = client.put(f"/products/{product_id}", json={
+        response = client.put(f"{endpoint}/{product_id}", json={
             "name": "Test Product",
             "unique_name": f"Test Unique Name {uuid.uuid4()}",
             "category_id": 1,
@@ -134,15 +135,15 @@ def test_update_product():
 
 
 def test_delete_product():
-    response = client.get("/products")
+    response = client.get(endpoint)
     assert response.status_code == 200
     if response.json() == []:
         assert response.json() == []
     else:
         product_id = response.json()[0]["id"]
-        response = client.delete(f"/products/{product_id}")
+        response = client.delete(f"{endpoint}/{product_id}")
         assert response.status_code == 200
         assert response.json()["id"] == product_id
-        response = client.get(f"/products/{product_id}")
+        response = client.get(f"{endpoint}/{product_id}")
         assert response.status_code == 404
         assert response.json() == {"detail": "Product not found"}
