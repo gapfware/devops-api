@@ -34,13 +34,15 @@ jobs:
           pytest
 
   test_secrets:
-    steps:
+    name: Test secrets
     runs-on: ubuntu-latest
-    - name: test
-      env:
-        PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        echo ${#PASSWORD}
+  
+    steps:
+      - name: test
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo ${#DOCKER_PASSWORD}
 
   push_to_dockerhub:
     name: Push Docker image to DockerHub
