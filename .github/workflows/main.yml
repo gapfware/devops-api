@@ -36,13 +36,14 @@ jobs:
   test_secrets:
     name: Test secrets
     runs-on: ubuntu-latest
-  
+    
     steps:
       - name: test
+      
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          echo ${DOCKER_PASSWORD}
+          echo ${#DOCKER_PASSWORD}
 
   push_to_dockerhub:
     name: Push Docker image to DockerHub
@@ -56,8 +57,9 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USER }}
+          Username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          secrets: inherit
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v4
