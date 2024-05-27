@@ -26,7 +26,7 @@ CMD ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0"]
 
 # 🚀 Production
 
-FROM python:3-slim-buster AS production
+FROM python:3-slim-buster AS prod
 
 WORKDIR /app
 
