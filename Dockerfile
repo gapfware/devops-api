@@ -13,6 +13,7 @@ RUN apk add --no-cache bzip2-dev \
     libressl-dev \
     linux-headers
 
+
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
@@ -21,7 +22,7 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["fastapi", "dev", "main.py", "--host", "0.0.0.0"]
+CMD ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0"]
 
 # 🚀 Production
 

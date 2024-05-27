@@ -1,7 +1,7 @@
 services:
   python_newrelic:
     build:
-      context: ../newrelic
+      context: ./newrelic
     depends_on:
       - db
     environment:
