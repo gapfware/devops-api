@@ -1,4 +1,12 @@
 services:
+  python_newrelic:
+    build:
+      context: ../newrelic
+    depends_on:
+      - db
+    environment:
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+      NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
   db:
     image: postgres:16.3
     environment:
@@ -20,7 +28,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
+      target: dev
     volumes:
       - .:/app
     ports:
@@ -28,6 +36,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
 
 volumes:
   db-data:

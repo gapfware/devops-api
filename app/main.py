@@ -1,3 +1,4 @@
+import newrelic.agent
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -6,10 +7,13 @@ from app.routers.product import router as product_router
 from app.middleware.error_handler import ErrorHandler
 from app.config.database import engine, Base
 
+newrelic.agent.initialize()
+
 app = FastAPI(
     title="Devops API",
     version="0.1",
 )
+
 
 Base.metadata.create_all(bind=engine)
 
