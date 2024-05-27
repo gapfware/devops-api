@@ -28,7 +28,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: dev
+      target: ${TARGET}
     volumes:
       - .:/app
     ports:
