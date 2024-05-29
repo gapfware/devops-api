@@ -29,7 +29,6 @@ async def create_category(category: CategoryCreate, db=Depends(get_db)):
     Args:
         category (CategoryCreate): The category data to be created.
         db: The database dependency.
-
     Returns:
         Category: The created category.
     """
