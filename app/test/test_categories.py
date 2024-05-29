@@ -63,7 +63,7 @@ def test_create_category_repeated_name():
             "others": {"test": "test"}
         }
     )
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     response = client.post(
         endpoint,
