@@ -60,7 +60,7 @@ jobs:
           context: ./app
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/products-categorized:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/products:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             TARGET=${{ vars.TARGET }}
